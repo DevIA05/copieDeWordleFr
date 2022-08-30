@@ -1,40 +1,76 @@
-* {                         /* Sélecteur universel. Il correspond à un élément de n'importe quel type. */
-    margin : 0;             /* Créer un espace supplémentaire à l'extérieur de l'élément */
-    padding: 0;             /* Crée un espace supplémentaire à l'intérieur d'un élément */
-    box-sizing: border-box; /* Définit la façon dont la hauteur et la largeur totale d'un élément est calculée: indique au navigateur de */
-                            /*   prendre en compte la bordure et le remplissage dans la valeur définie pour la largeur et la hauteur.  */
-  }
+* {
+  /* Sélecteur universel. Il correspond à un élément de n'importe quel type. */
+  margin: 0; /* Créer un espace supplémentaire à l'extérieur de l'élément */
+  padding: 0; /* Crée un espace supplémentaire à l'intérieur d'un élément */
+  box-sizing: border-box; /* Définit la façon dont la hauteur et la largeur totale d'un élément est calculée: indique au navigateur de */
+  /*   prendre en compte la bordure et le remplissage dans la valeur définie pour la largeur et la hauteur.  */
+}
 
 .header {
-    text-align: center;
-    background: black;
-    color: white;
-    font-size: 20px;
-    height: 50px;
+  text-align: center;
+  background: black;
+  color: white;
+  font-size: 20px;
+  height: 50px;
+}
+
+.container_ligne {
+  background-color: aqua;
+  width: auto;
 }
 
 .container_ligne .ligne {
-    display: flex;                         /* Affiche un élément en tant que conteneur flexible au niveau du bloc */
-    text-align: center;
-    width: auto;
-    justify-content: center;               /* Indique la façon dont l'espace doit être réparti entre et autour des éléments selon l'axe principal d'un conteneur */
-                                           /*   flexible ou selon l'axe en ligne lorsque le conteneur est une grille: l'alignement est appliqué après que les longueurs */
-                                           /*   et les marges automatiques ont été appliquées */
-    flex-wrap: wrap;                       /* Indique si les éléments flexibles sont contraints à être disposés sur une seule ligne ou s'ils peuvent être affichés sur */
-    background-color: aqua;
-    position: relative;
-    line-height:45px;  /* *********************************************************************** */
-  
+  display: flex; /* Affiche un élément en tant que conteneur flexible au niveau du bloc */
+  text-align: center;
+  justify-content: center; /* Indique la façon dont l'espace doit être réparti entre et autour des éléments selon l'axe principal d'un conteneur */
+  /*   flexible ou selon l'axe en ligne lorsque le conteneur est une grille: l'alignement est appliqué après que les longueurs */
+  /*   et les marges automatiques ont été appliquées */
+  flex-wrap: wrap; /* Indique si les éléments flexibles sont contraints à être disposés sur une seule ligne ou s'ils peuvent être affichés sur */
+  position: relative;
+  line-height: 45px; /*       <-----  *********************************************************************** */
 }
 
-.container_ligne .ligne .lettre{
-    height: 50px;
-    width: 50px;
-    background-color:azure;
-    border: 2px solid red;
-    margin: 3px;
+.container_ligne .ligne .lettre {
+  height: 50px;
+  width: 50px;
+  background-color: azure;
+  border: 2px solid red;
+  margin: 3px;
+  position: relative;
 }
 
-.container_ligne .ligne .lettre p{
-    background-color: bisque;
+.container_ligne .ligne .lettre p {
+  background-color: bisque;
+}
+
+.container_keyboard {
+  background-color: red;
+  width: auto;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  place-items: center;
+  /* Affiche un élément en tant que conteneur flexible au niveau du bloc */
+}
+
+.container_keyboard .keyboard {
+  text-align: center;
+  justify-content: center; /* Indique la façon dont l'espace doit être réparti entre et autour des éléments selon l'axe principal d'un conteneur */
+  /*   flexible ou selon l'axe en ligne lorsque le conteneur est une grille: l'alignement est appliqué après que les longueurs */
+  /*   et les marges automatiques ont été appliquées */
+  flex-wrap: wrap; /* Indique si les éléments flexibles sont contraints à être disposés sur une seule ligne ou s'ils peuvent être affichés sur */
+  background-color: yellow;
+  margin-top: 30px;
+  width: 500px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  place-items: center;
+  column-gap: 10px;
+}
+
+.container_keyboard .keyboard p {
+  height: 50px;
+  width: 40px;
+  background-color: azure;
+  border: 2px solid red;
+  line-height: 40px; /*<----- *********************************************************************** */
 }
