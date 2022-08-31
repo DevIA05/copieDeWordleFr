@@ -5,7 +5,7 @@
                             /*   prendre en compte la bordure et le remplissage dans la valeur définie pour la largeur et la hauteur.  */
   }
 
-.header {
+#header {
     text-align: center;
     background: black;
     color: white;
@@ -13,7 +13,11 @@
     height: 50px;
 }
 
-.container_ligne .ligne {
+#container_ligne{
+    margin-top: 50px;
+}
+
+#container_ligne .ligne {
     display: flex;                         /* Affiche un élément en tant que conteneur flexible au niveau du bloc */
     text-align: center;
     width: auto;
@@ -27,7 +31,7 @@
   
 }
 
-.container_ligne .ligne .lettre{
+#container_ligne .ligne .lettre{
     height: 50px;
     width: 50px;
     background-color:azure;
@@ -35,6 +39,37 @@
     margin: 3px;
 }
 
-.container_ligne .ligne .lettre p{
+#container_ligne .ligne .lettre p{
     background-color: bisque;
 }
+
+#container_keyboard {
+    position: fixed;
+    background-color: red;
+    width: 100%;
+    display: flex;
+    bottom: 0;
+  }
+  
+#container_keyboard .keyboard {
+  text-align: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: yellow;
+  margin: 0 auto 0 auto;
+  width: 400px;
+  display: flex;
+}
+  
+#container_keyboard .keyboard .touch{
+  height: 50px;
+  width: 40px;
+  background-color: azure;
+  border: 2px solid red;
+  line-height: 40px;
+  border-radius: 10%;
+}
+
+#container_keyboard .keyboard ._2c{ width: 80px; }
+
+body p { text-transform: uppercase; }
