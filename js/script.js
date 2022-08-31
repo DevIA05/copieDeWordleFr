@@ -11,14 +11,13 @@ document.querySelectorAll('.keyboard .touch').forEach(item => {
 var ligne = 1;
 var colonne = 1;
 
-function enableInput(l, c){
-    id = l + c 
-    var a = document.getElementById(id);
-    a.disabled=false;    
+function enableInput(l, c){ 
+    document.getElementById(l).children[c].disabled=false; 
 }
 
 enableInput("1","1")
 
-function highlighCase(){
+function highlighCase(){ 
+    document.getElementById(l+c).disabled=false; 
     
 }
