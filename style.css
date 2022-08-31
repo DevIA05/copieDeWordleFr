@@ -6,6 +6,8 @@
   /*   prendre en compte la bordure et le remplissage dans la valeur définie pour la largeur et la hauteur.  */
 }
 
+body{ background-color: black; }
+
 #header {
     text-align: center;
     background: black;
@@ -27,9 +29,7 @@
                                            /*   et les marges automatiques ont été appliquées */
     flex-wrap: wrap;                       /* Indique si les éléments flexibles sont contraints à être disposés sur une seule ligne ou s'ils peuvent être affichés sur */
     background-color: aqua;
-    position: relative;
-    line-height:45px;  /* *********************************************************************** */
-  
+    position: relative;  
 }
 
 #container_ligne .ligne .lettre{
@@ -38,39 +38,129 @@
     background-color:azure;
     border: 2px solid red;
     margin: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
-#container_ligne .ligne .lettre p{
+#container_ligne .ligne .lettre input{
     background-color: bisque;
+    height: 100%;
+    width: 100%;
+    border: none;
+    caret-color: transparent;
+    text-align: center;
 }
+
 
 #container_keyboard {
-    position: fixed;
     background-color: red;
-    width: 100%;
     display: flex;
-    bottom: 0;
-  }
+   }
   
 #container_keyboard .keyboard {
-  text-align: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  background-color: yellow;
-  margin: 0 auto 0 auto;
-  width: 400px;
-  display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto 0 auto;
+    width: 470px;
+    display: flex;
+    position: relative;
 }
-  
+
 #container_keyboard .keyboard .touch{
-  height: 50px;
-  width: 40px;
-  background-color: azure;
-  border: 2px solid red;
-  line-height: 40px;
-  border-radius: 10%;
+    margin: 2px;
+    height: 60px;
+    width: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* line-height: 50px; */
+    /* BACKGROUND  */
+    background: #636363;
+    background-color: rgb(99, 99, 99);
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-image: none;
+    background-size: auto;
+    background-origin: padding-box;
+    background-clip: border-box;
+    font-weight: 700;
+    /* BORDER */
+    border: none;
+    border-radius: 6%;
+    border-top-color: currentcolor;
+    border-top-style: none;
+    border-top-width: medium;
+    border-right-color: currentcolor;
+    border-right-style: none;
+    border-right-width: medium;
+    border-left-color: currentcolor;
+    border-left-style: none;
+    border-left-width: medium;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-bottom: 2px solid #4d4d4d;
+    border-bottom-color: rgb(77, 77, 77);
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    user-select: none;
+    transition: transform .2s;
+    transition-property: transform;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
 }
 
-#container_keyboard .keyboard ._2c{ width: 80px; }
+#container_keyboard .keyboard .touch:hover{
+    background: #5a5a5a;
+    background-color: rgb(90, 90, 90);
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-image: none;
+    background-size: auto;
+    background-origin: padding-box;
+    background-clip: border-box;
+    cursor: pointer;
+}
 
-body p{ text-transform: uppercase; }
+#container_keyboard .keyboard ._2c{ 
+    width: 90px; 
+}
+
+body input, button{ 
+    text-transform: uppercase; 
+}
+
+body #container_keyboard .touch button{
+    color: #fff;
+    font-size: 22px;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-height: 600px){
+    #container_keyboard .keyboard .touch{
+        height: 48px;
+    }
+    #container_keyboard input{
+        font-size: 14px;
+    }
+}
+
+@media (max-height: 700px){
+    #container_keyboard .keyboard .touch{
+        height: 50px;
+    }
+    #container_keyboard inputp{
+        font-size: 18px;
+    }
+}
