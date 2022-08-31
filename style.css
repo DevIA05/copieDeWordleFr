@@ -1,9 +1,10 @@
-* {                         /* Sélecteur universel. Il correspond à un élément de n'importe quel type. */
-    margin : 0;             /* Créer un espace supplémentaire à l'extérieur de l'élément */
-    padding: 0;             /* Crée un espace supplémentaire à l'intérieur d'un élément */
-    box-sizing: border-box; /* Définit la façon dont la hauteur et la largeur totale d'un élément est calculée: indique au navigateur de */
-                            /*   prendre en compte la bordure et le remplissage dans la valeur définie pour la largeur et la hauteur.  */
-  }
+* {
+  /* Sélecteur universel. Il correspond à un élément de n'importe quel type. */
+  margin: 0; /* Créer un espace supplémentaire à l'extérieur de l'élément */
+  padding: 0; /* Crée un espace supplémentaire à l'intérieur d'un élément */
+  box-sizing: border-box; /* Définit la façon dont la hauteur et la largeur totale d'un élément est calculée: indique au navigateur de */
+  /*   prendre en compte la bordure et le remplissage dans la valeur définie pour la largeur et la hauteur.  */
+}
 
 #header {
     text-align: center;
@@ -72,4 +73,4 @@
 
 #container_keyboard .keyboard ._2c{ width: 80px; }
 
-body p { text-transform: uppercase; }
+body p{ text-transform: uppercase; }
