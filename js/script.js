@@ -11,10 +11,11 @@ const word = "boule";
 document.querySelectorAll('.keyboard .touch').forEach(item => {
     item.addEventListener('click', e => {
         switch(e.target.id){
-            case "enter": 
-                verification(word, writtenWord);
-                goToNewLine();
-                break;
+            case "enter":
+                if(writtenWord.length == 5){
+                    verification(word, writtenWord);
+                    goToNewLine();
+                } break;
             case "suppr": goToPreviousCase(); break;
             default     : goToNextCase(e.target.innerHTML);
         }
@@ -24,13 +25,13 @@ document.querySelectorAll('.keyboard .touch').forEach(item => {
 // Listen the reel keyboard
 document.addEventListener('keydown', (e) => {
     if(e.key !== null){
-        if(e.code === "Enter" && column == 5){
+        if(e.code === "Enter" && writtenWord.length == 5){
             verification(word, writtenWord);
             goToNewLine();
         };
         if((e.code === "Backspace" || e.code === "Delete")) goToPreviousCase(); 
         if(!(/[a-z]/.test(e.key) && e.key.length<=1)) { e.key = ""; 
-        } else goToNextCase(e.key);
+        } else{ goToNextCase(e.key); } 
     }
   }, false);
 
@@ -56,11 +57,14 @@ function downCol(){if(column > 1) column-=1}
 
 /** Go to the next line
  *  adds a value (+1) to move to the next line and at the first column */
-function upLine(){if(line<6) line+=1; column=1;}
+function upLine(){line+=1; column=1;}
 
 /** Write letter in the current box
  * Set to the element identified by id the value str */
-function writeLetterinCase(l, c, str){ document.getElementById(l.toString()+c.toString()).innerHTML = str; }
+function writeLetterinCase(l, c, str){
+    if(writtenWord.length == 5) writtenWord = writtenWord.slice(0,-1); 
+    document.getElementById(l.toString()+c.toString()).innerHTML = str; 
+}
 
 /** Highligh the current box
  * Set the border color to highlight the element identified by id */
@@ -90,10 +94,12 @@ function goToNextCase(str){
 
 /* Go to the new line */ 
 function goToNewLine(){
-    unLightCase(line,column);
-    upLine();
-    highlighCase(line, column);
-    writtenWord = "";
+    if(line<6) {
+        unLightCase(line,column);
+        upLine();
+        highlighCase(line, column);
+        writtenWord = "";
+    }
 }
 
 /** Verification between the written word and the word 
@@ -111,7 +117,7 @@ function verification(w, ww){
             if(w.includes(ww[index])){
                 if(w[index] === ww[index]){ greenCase(l=line,c=index+1, idvk=ww[index]); 
                 } else { orangeCase(l=line,c=index+1, idvk=ww[index]) }
-            } else { greyCase(l=line,c=index+1, idvk=ww[index]); }
+            } else { greyCase(l=line, c=index+1, idvk=ww[index]); }
         }
     }
 }
