@@ -111,7 +111,7 @@ function verification(w, ww){
             if(w.includes(ww[index])){
                 if(w[index] === ww[index]){ greenCase(l=line,c=index+1, idvk=ww[index]); 
                 } else { orangeCase(l=line,c=index+1, idvk=ww[index]) }
-            } else { greyCase(l,c=index+1, idvk=ww[index]); }
+            } else { greyCase(l=line,c=index+1, idvk=ww[index]); }
         }
     }
 }
