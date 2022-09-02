@@ -27,6 +27,7 @@ document.addEventListener('keydown', (e) => {
     if(e.key !== null){
         if(e.code === "Enter" && writtenWord.length == 5){
             verification(word, writtenWord);
+            console.log(`Execution time: ${end - start} ms`);
             goToNewLine();
         };
         if((e.code === "Backspace" || e.code === "Delete")) goToPreviousCase(); 
@@ -147,3 +148,4 @@ function greyCase(l,c, idvk){
 
 // Trigger function ================================================
 highlighCase(line, column);
+//document.getElementById("myModal").style.display = "block";

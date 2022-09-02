@@ -155,10 +155,10 @@ body p{
   /* ====================================================- @MEDIA ===================================================== */
 
 @media (max-height: 600px){
-    #container_keyboard .keyboard .touch{
+    #container_keyboard .keyboard .touch {
         height: 48px;
     }
-    #container_keyboard input{
+    #container_keyboard p{
         font-size: 14px;
     }
 }
