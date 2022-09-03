@@ -8,41 +8,33 @@ const word = "boule";
 // Listen ==================================================
 
 // Listen the virtual keyboard
-document.querySelectorAll('.keyboard .touch').forEach(item => {
-    item.addEventListener('click', e => {
-        switch (e.target.id) {
-            case "enter":
-                if (writtenWord.length == 5) verification(word, writtenWord);
-                break;
-            case "suppr": goToPreviousCase(); break;
-            default: goToNextCase(e.target.innerHTML);
-        }
-    })
-})
+const vk = document.querySelectorAll('.keyboard .touch');
+vk.forEach(item => { item.addEventListener('click', listenVirtualKeyboard, false) })
+function listenVirtualKeyboard(e){
+    if (e.target.id === "enter" && writtenWord.length == 5) verification(word, writtenWord);
+    else if (e.target.id === "suppr") goToPreviousCase();
+    else goToNextCase(e.target.innerHTML)
+}
 
 // Listen the reel keyboard
-document.addEventListener('keydown', (e) => {
+const rk = document.addEventListener('keydown', listenReelKeyboard, false)
+function listenReelKeyboard(e){
     if (e.key !== null) {
-        if (e.code === "Enter" && writtenWord.length == 5) {
-            console.log(line + " " + column + "  " + e.key)
-            verification(word, writtenWord);
-
-        }
+        if (e.code === "Enter" && writtenWord.length == 5) verification(word, writtenWord);
         else if ((e.code === "Backspace" || e.code === "Delete")) goToPreviousCase();
-        else if (!(/[a-z]/.test(e.key) && e.key.length <= 1)) {
-            e.key = "";
-        } else {
-            goToNextCase(e.key);
-        }
+        else if (!(/[a-z]/.test(e.key) && e.key.length <= 1)) e.key = "";
+        else goToNextCase(e.key); 
     }
-}, false);
+}
+
+
 
 // Function ================================================
 
 /** Parameters
  * @param {int} l      : target the line 
  * @param {int} c      : target column
- * @param {string} str : letter that will be put in the box (it can also be a empty value with "")
+ * @param {string} str : letter that will be put in the box (it can also be a empty value with "") 
  * @param {string} w   : word to find 
  * @param {string} ww  : word written
  * @param {str} idvk   : id to find the virtual keyboard key in order to change the background color
@@ -110,47 +102,59 @@ function goToNewLine() {
 *   if she is not - set background color in grey
 */
 function verification(w, ww) {
-    if (w === ww) {
-        triggerPopUp("victoire")
-    } else {
         for (let index = 0; index < 5; index++) {
             if (w.includes(ww[index])) {
                 if (w[index] === ww[index]) {
-                    greenCase(l = line, c = index + 1, idvk = ww[index]);
-                } else { orangeCase(l = line, c = index + 1, idvk = ww[index]) }
-            } else { greyCase(l = line, c = index + 1, idvk = ww[index]); }
+                    colorCase(l = line, c = index + 1, idvk = ww[index], "green");
+                } else { colorCase(l = line, c = index + 1, idvk = ww[index], "orange"); }
+            } else { colorCase(l = line, c = index + 1, idvk = ww[index], color="#2c2c2c"); }
         }
-        if (line < 6) { goToNewLine();
-        } else{ triggerPopUp("défaite") }
-    }
+        if (w === ww) triggerPopUp("victoire")
+        else {
+            if (line < 6) goToNewLine(); 
+            else triggerPopUp("défaite")     
+        }
 }
 
-/** Green case
- * Set a green background on the box and the virtual keyboard key when the letter of the written word 
- * is on the same index as that of the word. */
-function greenCase(l, c, idvk) {
-    document.getElementById(l.toString() + c.toString()).style.backgroundColor = "green";
-    document.getElementById(idvk).style.backgroundColor = "green";
+// function verification(w, ww){
+//     let countGreen  = 0;
+//     let countOrange = 0;
+//     for (let wwi = 0; wwi < 5; wwi++) {
+//         for(let wi = 0; wi < 5; wi++){
+//             if (w[wi] === ww[wwi]) {
+//                 if(wi===wwi){ colorCase(l = line, c = wwi + 1, idvk = ww[wwi], "green"); countGreen++;
+//                 } else{ colorCase(l = line, c = wwi + 1, idvk = ww[wwi], "orange"); countOrange++;}
+//                 break;
+//             }
+//         if(countGreen < 1 || countOrange < 1) colorCase(l = line, c = wwi + 1, idvk = ww[wwi], color="#2c2c2c");
+//         }
+//     }
+//     if(countGreen == 5) triggerPopUp("victoire")
+//     else { if (line < 6) goToNewLine(); else triggerPopUp("défaite") }
+// }
+
+/** Set a grey background on the box and the virtual keyboard key when:
+ * - the letter is not contained in the word 
+ * - the letter is contained in the word but at the wrong index 
+ * -  the letter of the written word is on the same index as that of the word. */
+function colorCase(l, c, idvk, color){
+    document.getElementById(l.toString() + c.toString()).style.backgroundColor = color;
+    document.getElementById(idvk).style.backgroundColor = color;
 }
 
-/** Orange case
- * Set a orange background on the box and the virtual keyboard key when the letter is contained in the word 
- * but at the wrong index */
-function orangeCase(l, c, idvk) {
-    document.getElementById(l.toString() + c.toString()).style.backgroundColor = "orange";
-    document.getElementById(idvk).style.backgroundColor = "orange";
+function removeListener(){
+    vk.forEach(item => { item.removeEventListener('click', listenVirtualKeyboard, false) });
+    document.removeEventListener('keydown', listenReelKeyboard, false);
 }
 
-/** Grey case
- * Set a grey background on the box and the virtual keyboard key when the letter is not contained in the word */
-function greyCase(l, c, idvk) {
-    document.getElementById(l.toString() + c.toString()).style.backgroundColor = "#2c2c2c";
-    document.getElementById(idvk).style.backgroundColor = "#2c2c2c";
-}
-
+/** Trigger the pop-up at the end game
+ * @param {string} str word (ex: victory or defeat) */
 function triggerPopUp(str) {
+    removeListener();
     textPopUp.innerHTML = str
     modal.style.display = "block"
+    // disable event listener
+
 }
 
 // Trigger function ================================================
