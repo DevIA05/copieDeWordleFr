@@ -19,6 +19,11 @@
   border: 1px solid #888;
   width: 40%; /* Could be more or less, depending on screen size */
   height: 80%;
+  /* Add animation */
+  -webkit-animation-name: animModal; /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 0.5; /* Chrome, Safari, Opera */
+  animation-name: animModal;
+  animation-duration: 0.5s;
 }
 
 /* ------------------------------------------ 
@@ -51,3 +56,15 @@ a .close:target {
   color: white;
 }
 
+
+/* Add animation (Chrome, Safari, Opera) */
+@-webkit-keyframes animModal {
+  from {top:-100px;opacity: 0;}
+  to {top:0px;opacity:1;}
+}
+
+/* Add animation (Standard syntax) */
+@keyframes animModal {
+  from {top:-100px;opacity: 0;}
+  to {top:0px;opacity:1;}
+}
