@@ -1,8 +1,8 @@
 // Variable ================================================
-let line = 1; 
-let column = 1; 
-let writtenWord = ""; 
-const word = "boule"; 
+let line = 1;
+let column = 1;
+let writtenWord = "";
+const word = "boule";
 
 
 // Listen ==================================================
@@ -10,31 +10,32 @@ const word = "boule";
 // Listen the virtual keyboard
 document.querySelectorAll('.keyboard .touch').forEach(item => {
     item.addEventListener('click', e => {
-        switch(e.target.id){
+        switch (e.target.id) {
             case "enter":
-                if(writtenWord.length == 5){
-                    verification(word, writtenWord);
-                    goToNewLine();
-                } break;
+                if (writtenWord.length == 5) verification(word, writtenWord);
+                break;
             case "suppr": goToPreviousCase(); break;
-            default     : goToNextCase(e.target.innerHTML);
+            default: goToNextCase(e.target.innerHTML);
         }
     })
 })
 
 // Listen the reel keyboard
 document.addEventListener('keydown', (e) => {
-    if(e.key !== null){
-        if(e.code === "Enter" && writtenWord.length == 5){
+    if (e.key !== null) {
+        if (e.code === "Enter" && writtenWord.length == 5) {
+            console.log(line + " " + column + "  " + e.key)
             verification(word, writtenWord);
-            console.log(`Execution time: ${end - start} ms`);
-            goToNewLine();
-        };
-        if((e.code === "Backspace" || e.code === "Delete")) goToPreviousCase(); 
-        if(!(/[a-z]/.test(e.key) && e.key.length<=1)) { e.key = ""; 
-        } else{ goToNextCase(e.key); } 
+
+        }
+        else if ((e.code === "Backspace" || e.code === "Delete")) goToPreviousCase();
+        else if (!(/[a-z]/.test(e.key) && e.key.length <= 1)) {
+            e.key = "";
+        } else {
+            goToNextCase(e.key);
+        }
     }
-  }, false);
+}, false);
 
 // Function ================================================
 
@@ -53,54 +54,52 @@ document.addEventListener('keydown', (e) => {
 
 /** Go to the adjacent value
  *  Add +1 or -1 at the column value in order to move to the right or left */
-function upCol(){if(column < 5) column +=1;}
-function downCol(){if(column > 1) column-=1}
+function upCol() { if (column < 5) column += 1; }
+function downCol() { if (column > 1) column -= 1 }
 
 /** Go to the next line
  *  adds a value (+1) to move to the next line and at the first column */
-function upLine(){line+=1; column=1;}
+function upLine() { line += 1; column = 1; }
 
 /** Write letter in the current box
  * Set to the element identified by id the value str */
-function writeLetterinCase(l, c, str){
-    if(writtenWord.length == 5) writtenWord = writtenWord.slice(0,-1); 
-    document.getElementById(l.toString()+c.toString()).innerHTML = str; 
+function writeLetterinCase(l, c, str) {
+    if (writtenWord.length == 5) writtenWord = writtenWord.slice(0, -1);
+    document.getElementById(l.toString() + c.toString()).innerHTML = str;
 }
 
 /** Highligh the current box
  * Set the border color to highlight the element identified by id */
-function highlighCase(l,c){ document.getElementById(l.toString()+c.toString()).style.borderColor="#73adff"; }
+function highlighCase(l, c) { document.getElementById(l.toString() + c.toString()).style.borderColor = "#73adff"; }
 
 /** Unligh the previous box
  * Remove the border color the element identified by id */
-function unLightCase(l,c){ document.getElementById(l.toString()+(c).toString()).style.borderColor="#646464"; }
+function unLightCase(l, c) { document.getElementById(l.toString() + (c).toString()).style.borderColor = "#646464"; }
 
 // Go to the previous box
-function goToPreviousCase(){
-    unLightCase(line,column);
+function goToPreviousCase() {
+    unLightCase(line, column);
     writeLetterinCase(line, column, "");
     downCol();
     highlighCase(line, column);
-    writtenWord = writtenWord.slice(0,-1);
+    writtenWord = writtenWord.slice(0, -1);
 }
 
 /* Go to the next box */
-function goToNextCase(str){
+function goToNextCase(str) {
     writeLetterinCase(line, column, str);
-    unLightCase(line,column);
+    unLightCase(line, column);
     upCol();
     highlighCase(line, column);
     writtenWord += str;
 }
 
-/* Go to the new line */ 
-function goToNewLine(){
-    if(line<6) {
-        unLightCase(line,column);
-        upLine();
-        highlighCase(line, column);
-        writtenWord = "";
-    }
+/* Go to the new line */
+function goToNewLine() {
+    unLightCase(line, column);
+    upLine();
+    highlighCase(line, column);
+    writtenWord = "";
 }
 
 /** Verification between the written word and the word 
@@ -110,42 +109,49 @@ function goToNewLine(){
 *                     if it is not - set background color in orange
 *   if she is not - set background color in grey
 */
-function verification(w, ww){
-    if(w===ww){
-        // .....
-    } else{
+function verification(w, ww) {
+    if (w === ww) {
+        triggerPopUp("victoire")
+    } else {
         for (let index = 0; index < 5; index++) {
-            if(w.includes(ww[index])){
-                if(w[index] === ww[index]){ greenCase(l=line,c=index+1, idvk=ww[index]); 
-                } else { orangeCase(l=line,c=index+1, idvk=ww[index]) }
-            } else { greyCase(l=line, c=index+1, idvk=ww[index]); }
+            if (w.includes(ww[index])) {
+                if (w[index] === ww[index]) {
+                    greenCase(l = line, c = index + 1, idvk = ww[index]);
+                } else { orangeCase(l = line, c = index + 1, idvk = ww[index]) }
+            } else { greyCase(l = line, c = index + 1, idvk = ww[index]); }
         }
+        if (line < 6) { goToNewLine();
+        } else{ triggerPopUp("défaite") }
     }
 }
 
 /** Green case
  * Set a green background on the box and the virtual keyboard key when the letter of the written word 
- * is on the same index as that of the word. */ 
-function greenCase(l,c, idvk){
-    document.getElementById(l.toString()+c.toString()).style.backgroundColor="green";
-    document.getElementById(idvk).style.backgroundColor="green";
+ * is on the same index as that of the word. */
+function greenCase(l, c, idvk) {
+    document.getElementById(l.toString() + c.toString()).style.backgroundColor = "green";
+    document.getElementById(idvk).style.backgroundColor = "green";
 }
 
 /** Orange case
  * Set a orange background on the box and the virtual keyboard key when the letter is contained in the word 
- * but at the wrong index */ 
-function orangeCase(l,c, idvk){
-    document.getElementById(l.toString()+c.toString()).style.backgroundColor="orange";
-    document.getElementById(idvk).style.backgroundColor="orange";
+ * but at the wrong index */
+function orangeCase(l, c, idvk) {
+    document.getElementById(l.toString() + c.toString()).style.backgroundColor = "orange";
+    document.getElementById(idvk).style.backgroundColor = "orange";
 }
 
 /** Grey case
  * Set a grey background on the box and the virtual keyboard key when the letter is not contained in the word */
-function greyCase(l,c, idvk){
-    document.getElementById(l.toString()+c.toString()).style.backgroundColor="#2c2c2c";
-    document.getElementById(idvk).style.backgroundColor="#2c2c2c";    
+function greyCase(l, c, idvk) {
+    document.getElementById(l.toString() + c.toString()).style.backgroundColor = "#2c2c2c";
+    document.getElementById(idvk).style.backgroundColor = "#2c2c2c";
+}
+
+function triggerPopUp(str) {
+    textPopUp.innerHTML = str
+    modal.style.display = "block"
 }
 
 // Trigger function ================================================
 highlighCase(line, column);
-//document.getElementById("myModal").style.display = "block";
