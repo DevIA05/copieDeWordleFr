@@ -1,3 +1,5 @@
+/* Create the end pop-up */
+
 const modal     = document.getElementById("myModal");
 const textPopUp = document.getElementById("textPopUp");
 //modal.style.display = "block";

@@ -48,13 +48,33 @@ a .close:target {
   cursor: pointer;
 }
   
-.modal .modal-content p {
+#container-timer{
   position: relative;
   display: flex;
+  /* flex-wrap: wrap; */
   justify-content: center;
-  top: 50%;
-  color: white;
+  align-items: center;
+  margin-top: 20px;
 }
+
+#timer{
+  font: 1.8em "Fira Sans", sans-serif;
+  font-weight: 900;
+}
+
+
+#text-timer{
+  font: 1.5em "Fira Sans", sans-serif;
+  font-weight: 800;
+}
+
+.modal .modal-content p {
+  /* position: relative;
+  display: flex;
+  justify-content: center;
+  top: 50%; */
+  color: white;
+} 
 
 
 /* Add animation (Chrome, Safari, Opera) */

@@ -1,8 +1,8 @@
 // Variable ================================================
-let line = 1;
-let column = 1;
-let writtenWord = "";
-const word = "boule";
+let   line        = 1  ;
+let   column      = 1  ;
+let   writtenWord = "" ;
+const word        = ""
 
 
 // Listen ==================================================
@@ -32,12 +32,12 @@ function listenReelKeyboard(e){
 // Function ================================================
 
 /** Parameters
- * @param {int} l      : target the line 
- * @param {int} c      : target column
- * @param {string} str : letter that will be put in the box (it can also be a empty value with "") 
- * @param {string} w   : word to find 
- * @param {string} ww  : word written
- * @param {str} idvk   : id to find the virtual keyboard key in order to change the background color
+ * @param {int}    l    : target the line 
+ * @param {int}    c    : target column
+ * @param {string} str  : letter that will be put in the box (it can also be a empty value with "") 
+ * @param {string} w    : word to find 
+ * @param {string} ww   : word written
+ * @param {str}    idvk : id to find the virtual keyboard key in order to change the background color
  * 
  * Construction of a box's id: string(line)+string(column)
  * ex: first line  - id(b1): 11, ..., id(b5): 15 
@@ -116,23 +116,6 @@ function verification(w, ww) {
         }
 }
 
-// function verification(w, ww){
-//     let countGreen  = 0;
-//     let countOrange = 0;
-//     for (let wwi = 0; wwi < 5; wwi++) {
-//         for(let wi = 0; wi < 5; wi++){
-//             if (w[wi] === ww[wwi]) {
-//                 if(wi===wwi){ colorCase(l = line, c = wwi + 1, idvk = ww[wwi], "green"); countGreen++;
-//                 } else{ colorCase(l = line, c = wwi + 1, idvk = ww[wwi], "orange"); countOrange++;}
-//                 break;
-//             }
-//         if(countGreen < 1 || countOrange < 1) colorCase(l = line, c = wwi + 1, idvk = ww[wwi], color="#2c2c2c");
-//         }
-//     }
-//     if(countGreen == 5) triggerPopUp("victoire")
-//     else { if (line < 6) goToNewLine(); else triggerPopUp("défaite") }
-// }
-
 /** Set a grey background on the box and the virtual keyboard key when:
  * - the letter is not contained in the word 
  * - the letter is contained in the word but at the wrong index 
@@ -142,6 +125,7 @@ function colorCase(l, c, idvk, color){
     document.getElementById(idvk).style.backgroundColor = color;
 }
 
+/* Remove listening to the keyboard and virtual keyboard when game ends */
 function removeListener(){
     vk.forEach(item => { item.removeEventListener('click', listenVirtualKeyboard, false) });
     document.removeEventListener('keydown', listenReelKeyboard, false);
@@ -150,12 +134,17 @@ function removeListener(){
 /** Trigger the pop-up at the end game
  * @param {string} str word (ex: victory or defeat) */
 function triggerPopUp(str) {
+    // disable event listener
     removeListener();
     textPopUp.innerHTML = str
     modal.style.display = "block"
-    // disable event listener
+    document.getElementById("réponse").textContent = word;
 
 }
 
-// Trigger function ================================================
-highlighCase(line, column);
+function initWord(){
+    word = tab_mots[Math.floor(Math.random() * tab_mots.length)].toLowerCase(); // select a random word from the list
+}
+
+function main(){
+}
