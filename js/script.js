@@ -2,7 +2,7 @@
 let   line        = 1  ;
 let   column      = 1  ;
 let   writtenWord = "" ;
-const word        = ""
+let word          = ""
 
 
 // Listen ==================================================
@@ -146,5 +146,4 @@ function initWord(){
     word = tab_mots[Math.floor(Math.random() * tab_mots.length)].toLowerCase(); // select a random word from the list
 }
 
-function main(){
-}
+

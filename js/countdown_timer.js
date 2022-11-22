@@ -19,7 +19,7 @@ function addSecond(date=new Date(), second=10){
 // document.cookie = `d=${new Date()};expires=${addSecond().toUTCString()};SameSite=Strict;secure=TRUE`
 
 
-function launchTimer(){
+function launchTimer(countDownDate){
     
     //Update the count down every 1 second
     let x = setInterval(function() {
@@ -75,4 +75,17 @@ function unlockGame(x){
   } else{
 
   }  
+}
+
+function test(){
+  if(getCookie("d") == null){
+      // unlock the game
+      modal.style.display = "none"
+  }
+  else {
+      removeListener()
+      countDownDate = new Date(getCookie("d"))
+      launchTimer(countDownDate)
+      modal.style.display = "block"  //modal.style.display = "none"
+  }
 }
