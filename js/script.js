@@ -4,12 +4,12 @@ let   column      = 1  ;
 let   writtenWord = "" ;
 let word          = ""
 
+const vk = document.querySelectorAll('.keyboard .touch');
 
 // Listen ==================================================
 
 // Listen the virtual keyboard
-const vk = document.querySelectorAll('.keyboard .touch');
-vk.forEach(item => { item.addEventListener('click', listenVirtualKeyboard, false) })
+// vk.forEach(item => { item.addEventListener('click', listenVirtualKeyboard, false) })
 function listenVirtualKeyboard(e){
     if (e.target.id === "enter" && writtenWord.length == 5) verification(word, writtenWord);
     else if (e.target.id === "suppr") goToPreviousCase();
@@ -17,7 +17,7 @@ function listenVirtualKeyboard(e){
 }
 
 // Listen the reel keyboard
-const rk = document.addEventListener('keydown', listenReelKeyboard, false)
+// const rk = document.addEventListener('keydown', listenReelKeyboard, false)
 function listenReelKeyboard(e){
     if (e.key !== null) {
         if (e.code === "Enter" && writtenWord.length == 5) verification(word, writtenWord);
@@ -26,8 +26,6 @@ function listenReelKeyboard(e){
         else goToNextCase(e.key); 
     }
 }
-
-
 
 // Function ================================================
 
@@ -131,19 +129,61 @@ function removeListener(){
     document.removeEventListener('keydown', listenReelKeyboard, false);
 }
 
+/* Listen the keyboard and virtual keyboard */
+function listenElement(){
+    vk.forEach(item => { item.addEventListener('click', listenVirtualKeyboard, false) })
+    document.addEventListener('keydown', listenReelKeyboard, false)
+}
+
 /** Trigger the pop-up at the end game
  * @param {string} str word (ex: victory or defeat) */
 function triggerPopUp(str) {
-    // disable event listener
-    removeListener();
     textPopUp.innerHTML = str
-    modal.style.display = "block"
     document.getElementById("réponse").textContent = word;
+    lockGame()
 
 }
 
-function initWord(){
+/* Selection the word to found */
+function initWord(){ 
     word = tab_mots[Math.floor(Math.random() * tab_mots.length)].toLowerCase(); // select a random word from the list
 }
 
+/** Unlock the game after the allotted time has elapsed
+   When the timer is end clear interval time and unlock keyboard and virtual keyboard
+   @param {setInterval} x (function setInterval return a int)
+ */ 
+function unlockGame(x){
+    if(x!=null) clearInterval(x);
+    listenElement()                  // unlock keyboard
+    modal.style.display = "none"     // Remove the pop-up
+}
 
+/** Lock the game after fulfilling the stop conditions */
+function lockGame(){
+    removeListener()
+    countDownDate = getCookie("d") == null ? createCookie() : new Date(getCookie("d"))
+    launchTimer(countDownDate)
+    document.getElementById("réponse").textContent = getCookie("mot");
+    modal.style.display = "block"
+}
+
+/** Start the game
+ * if the waiting time has elapsed then listen again to the elements and hide the pop-up
+ * else remove event listener from elements and show the pop-up  
+ */
+function launchGame(){
+    if(getCookie("d") == null){
+        initWord()
+        highlighCase(line, column); 
+        unlockGame(x=null)  
+    }
+    else { 
+        lockGame() 
+    }
+}
+
+
+// =================================== START THE GAME ======================================
+launchGame()
+// =========================================================================================

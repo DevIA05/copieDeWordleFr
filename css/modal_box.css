@@ -48,15 +48,6 @@ a .close:target {
   cursor: pointer;
 }
   
-#container-timer{
-  position: relative;
-  display: flex;
-  /* flex-wrap: wrap; */
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
-
 #timer{
   font: 1.8em "Fira Sans", sans-serif;
   font-weight: 900;
@@ -64,17 +55,20 @@ a .close:target {
 
 
 #text-timer{
-  font: 1.5em "Fira Sans", sans-serif;
+  font: 1.3em "Fira Sans", sans-serif;
   font-weight: 800;
 }
 
 .modal .modal-content p {
-  /* position: relative;
-  display: flex;
-  justify-content: center;
-  top: 50%; */
   color: white;
 } 
+
+#container-elem{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  top: 50%;
+}
 
 
 /* Add animation (Chrome, Safari, Opera) */

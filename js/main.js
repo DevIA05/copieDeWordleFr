@@ -1,1 +1,0 @@
-highlighCase(line, column);

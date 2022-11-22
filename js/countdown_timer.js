@@ -1,7 +1,9 @@
-function updateDate(){
+function createCookie(){
   let countDownDate = new Date()
   countDownDate.setDate(countDownDate.getDate() + 1);
   document.cookie = `d=${countDownDate}; expires=${countDownDate.toUTCString()};SameSite=Strict;secure=TRUE`
+  document.cookie = `mot=${word}; expires=${countDownDate.toUTCString()};SameSite=Strict;secure=TRUE`
+  return countDownDate
 }
 
 function addMinutes(date=new Date(), minutes=1) {
@@ -22,28 +24,34 @@ function addSecond(date=new Date(), second=10){
 function launchTimer(countDownDate){
     
     //Update the count down every 1 second
-    let x = setInterval(function() {
+    const x = setInterval(function() {
 
       // Get today's date and time
-      let now = new Date().getTime();
+      const now = new Date().getTime();
 
       // Find the distance between now and the count down date
-      let distance = countDownDate - now;
+      const distance = countDownDate - now;
 
       // Time calculations for days, hours, minutes and seconds
-    //   let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      //   let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       // Output the result in an element with id="demo"
       document.getElementById("timer").innerHTML = hours + "h "
       + minutes + "min " + seconds + "s "; //   days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+      
+      if (distance < 0) {
+        unlockGame(x)
+      }
 
     }, 1000);
   }
 
-
+/** Extract information from cookie object 
+ * @param {str} name stored value name
+*/
 function getCookie(name) {
     // Split cookie string and get all individual name=value pairs in an array
     var cookieArr = document.cookie.split(";");
@@ -61,31 +69,4 @@ function getCookie(name) {
     } 
     // Return null if not found
     return null;
-}
-
-/** Unlock the game after the allotted time has elapsed
-   When the timer is end clear interval time and unlock keyboard and virtual keyboard
-   @param {setInterval} x (function setInterval return a int)
- */ 
-function unlockGame(x){
-  if (distance < 0) {
-    clearInterval(x);
-    // Remove the pop-up
-    // and unlock keyboard
-  } else{
-
-  }  
-}
-
-function test(){
-  if(getCookie("d") == null){
-      // unlock the game
-      modal.style.display = "none"
-  }
-  else {
-      removeListener()
-      countDownDate = new Date(getCookie("d"))
-      launchTimer(countDownDate)
-      modal.style.display = "block"  //modal.style.display = "none"
-  }
 }
